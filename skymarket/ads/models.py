@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 
-from users.models import User
+from users.models import User, NULLABLE
 
 
 class Ad(models.Model):
@@ -12,6 +12,7 @@ class Ad(models.Model):
     description = models.TextField(max_length=1000, blank=True)
     price = models.PositiveIntegerField()
     author = models.ForeignKey(User, related_name="ads", on_delete=models.CASCADE, null=True)
+    image = models.ImageField(upload_to="ads/img", **NULLABLE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
