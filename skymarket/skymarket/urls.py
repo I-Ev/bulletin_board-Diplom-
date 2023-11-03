@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -33,5 +34,7 @@ urlpatterns = [
 
                   path("api/users/", include("users.urls")),
                   path("api/ads/", include("ads.urls")),
+                  path('api/token/', TokenObtainPairView.as_view()),
+                  path('api/refresh/', TokenRefreshView.as_view()),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
