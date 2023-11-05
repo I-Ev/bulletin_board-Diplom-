@@ -10,7 +10,7 @@ class Command(BaseCommand):
             first_name='admin',
             last_name='admin',
             role='admin',
-            phone='+79000000000',
+            phone='+79000000001',
             # is_staff=True,
             # is_superuser=True,
         )

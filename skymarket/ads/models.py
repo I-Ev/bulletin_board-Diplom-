@@ -6,7 +6,27 @@ from users.models import User, NULLABLE
 
 
 class Ad(models.Model):
-    """Модель Объявления"""
+    """
+       Модель для хранения информации об объявлениях.
+
+       Поля:
+       - title (CharField): Заголовок объявления, максимум 200 символов.
+       - description (TextField): Описание объявления, максимум 1000 символов (необязательное поле).
+       - price (PositiveIntegerField): Цена объявления.
+       - author (ForeignKey): Связь с моделью User для указания автора объявления (может быть null).
+       - image (ImageField): Изображение объявления (может быть null).
+       - created_at (DateTimeField): Дата и время создания объявления (автоматически заполняется).
+
+       Метаданные:
+       - verbose_name: Название модели в единственном числе.
+       - verbose_name_plural: Название модели во множественном числе.
+       - ordering: Сортировка объявлений по умолчанию - по дате создания в обратном порядке.
+
+       Методы:
+       - __str__: Возвращает строковое представление объекта, используется для отображения в административной панели.
+
+       """
+
 
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=1000, blank=True)
@@ -25,12 +45,30 @@ class Ad(models.Model):
 
 
 class Comment(models.Model):
-    """Модель Комментария"""
+    """
+        Модель для хранения комментариев к объявлениям.
+
+        Поля:
+        - text (TextField): Текст комментария, максимум 1000 символов.
+        - author (ForeignKey): Связь с моделью User для указания автора комментария (может быть null).
+        - ad (ForeignKey): Связь с моделью Ad для указания объявления, к которому относится комментарий.
+        - created_at (DateTimeField): Дата и время создания комментария (автоматически заполняется).
+
+        Метаданные:
+        - verbose_name: Название модели в единственном числе.
+        - verbose_name_plural: Название модели во множественном числе.
+        - ordering: Сортировка комментариев по умолчанию - по дате создания в обратном порядке.
+
+        Методы:
+        - __str__: Возвращает строковое представление объекта, используется для отображения в административной панели.
+
+        """
 
     text = models.TextField(max_length=1000)
     author = models.ForeignKey(User, related_name="comments", on_delete=models.SET_NULL, null=True)
     ad = models.ForeignKey(Ad, related_name="comments", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
     class Meta:
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"

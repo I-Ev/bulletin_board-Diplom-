@@ -11,23 +11,34 @@ from users.models import User
 
 
 class AdPagination(pagination.PageNumberPagination):
+    """
+    Пагинация для списка объявлений.
+    """
     page_size = 4
     page_query_param = 'page'
 
 
 # TODO view функции. Предлагаем Вам следующую структуру - но Вы всегда можете использовать свою
 class AdViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet для объявлений.
+    """
     queryset = Ad.objects.all()
     pagination_class = AdPagination
     filterset_class = AdFilter
 
     def get_serializer_class(self):
+        """
+        Определяет класс сериализатора в зависимости от действия.
+        """
         if self.action == 'list':
             return AdSerializer
         return AdDetailSerializer
 
     # def get_permissions(self):
-    #     """Права доступа"""
+    #     """
+    #     Определяет права доступа в зависимости от выполняемого действия.
+    #     """
     #     if self.action == 'retrieve':
     #         permission_classes = [IsAuthenticated]
     #     elif self.action == 'create':
@@ -39,17 +50,25 @@ class AdViewSet(viewsets.ModelViewSet):
     #     return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
+        """
+        Создает новое объявление и устанавливает автора.
+        """
         ad = serializer.save()
         ad.author = get_object_or_404(User, id=self.request.user.id)
         ad.save()
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet для комментариев к объявлениям.
+    """
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
     # def get_permissions(self):
-    #     """Права доступа"""
+    #     """
+    #     Определяет права доступа в зависимости от выполняемого действия.
+    #     """
     #     if self.action == 'retrieve':
     #         permission_classes = [IsStaff]
     #     elif self.action == 'create':
@@ -61,15 +80,24 @@ class CommentViewSet(viewsets.ModelViewSet):
     #     return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
+        """
+        Создает новый комментарий и устанавливает автора.
+        """
         comment = serializer.save()
         comment.author = get_object_or_404(User, id=self.request.user.id)
         comment.save()
 
 class UserAdsListView(ListAPIView):
+    """
+    Представление для списка объявлений пользователя.
+    """
     queryset = Ad.objects.all()
     serializer_class = AdSerializer
     # permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
+        """
+        Фильтрует список объявлений по автору (пользователю).
+        """
         self.queryset = self.queryset.filter(author=request.user)
         return super().list(request, *args, **kwargs)

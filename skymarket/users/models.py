@@ -14,7 +14,25 @@ class UserRoles(models.TextChoices):
     ADMIN = 'admin', _('admin')  # Админ
 
 class CustomUserManager(BaseUserManager):
+    """
+    Кастомный менеджер пользователей.
+    """
     def create_user(self, email, password=None, **extra_fields):
+        """
+                Создать обычного пользователя.
+
+                Параметры:
+                email (str): Email пользователя.
+                password (str): Пароль пользователя.
+                extra_fields (dict): Дополнительные поля.
+
+                Возвращает:
+                User: Созданный пользователь.
+
+                Выбрасывает:
+                ValueError: Если email не указан.
+                """
+
         if not email:
             raise ValueError('The Email field must be set')
         email = self.normalize_email(email)
@@ -24,6 +42,20 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
+        """
+                Создать суперпользователя.
+
+                Параметры:
+                email (str): Email суперпользователя.
+                password (str): Пароль суперпользователя.
+                extra_fields (dict): Дополнительные поля.
+
+                Возвращает:
+                User: Созданный суперпользователь.
+
+                Выбрасывает:
+                ValueError: Если не установлены необходимые атрибуты is_staff и is_superuser.
+                """
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -35,6 +67,29 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 class User(AbstractUser):
+    """
+        Модель пользователя.
+
+        Атрибуты:
+        email (str): Email пользователя.
+        first_name (str): Имя пользователя.
+        last_name (str): Фамилия пользователя.
+        phone (str): Телефон пользователя.
+        role (str): Роль пользователя (выбор из UserRoles).
+        is_active (bool): Флаг активности пользователя.
+        image (ImageField): Аватар пользователя.
+
+        Методы:
+        is_admin (property): Возвращает True, если пользователь - администратор.
+        is_user (property): Возвращает True, если пользователь - обычный пользователь.
+        is_superuser (property): Возвращает True, если пользователь - суперпользователь.
+        is_staff (property): Возвращает True, если пользователь - сотрудник.
+
+        has_perm: Проверяет наличие разрешения у пользователя.
+        has_module_perms: Проверяет наличие разрешения для модуля.
+
+        __str__: Возвращает email пользователя.
+        """
 
     username = None
     email = models.EmailField(unique=True, verbose_name='Email')
