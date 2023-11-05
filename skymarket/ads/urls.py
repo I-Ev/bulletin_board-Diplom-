@@ -2,7 +2,10 @@ from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 from rest_framework_nested import routers
 
+from ads.apps import SalesConfig
 from ads.views import AdViewSet, CommentViewSet, UserAdsListView
+
+app_name = SalesConfig.name
 
 # ads_router = SimpleRouter()
 # ads_router.register('', AdViewSet)
