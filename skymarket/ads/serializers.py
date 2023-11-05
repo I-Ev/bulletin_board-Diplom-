@@ -16,7 +16,7 @@ class AdSerializer(serializers.ModelSerializer):
     # TODO сериалайзер для модели
     class Meta:
         model = Ad
-        fields = ["title", "description", "price", "image"]
+        fields = ["id", "title", "description", "price", "image"]
 
 
 class AdDetailSerializer(serializers.ModelSerializer):

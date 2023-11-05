@@ -1,11 +1,13 @@
 from rest_framework.permissions import BasePermission
 
+from users.models import UserRoles
+
 
 class IsStaff(BasePermission):
     """Права доступа для админа"""
     def has_permission(self, request, view):
         """Проверка роли Модератор"""
-        if not request.user.is_admin:
+        if not request.user.role == UserRoles.ADMIN:
                 return False
         return True
 

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
 
     "corsheaders",
     'drf_yasg',
+    'django_filters',
 
 ]
 
@@ -92,6 +94,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ]
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=5),
 }
 
 # TODO здесь мы настраиваем Djoser
@@ -165,10 +172,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "django_media")
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
-    'https://*',  # Замените на адрес вашего фронтенд-сервера ИЛИ для * для всех
+    "http://127.0.0.1:3000",  # Замените на адрес вашего фронтенд-сервера ИЛИ для * для всех
 ]
 CSRF_TRUSTED_ORIGINS = [
-    "http://*",  # Замените на адрес вашего фронтенд-сервера и добавьте адрес бэкенд-сервера
+    "http://127.0.0.1:3000",  # Замените на адрес вашего фронтенд-сервера и добавьте адрес бэкенд-сервера
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
