@@ -1,22 +1,15 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import pagination, viewsets
+from rest_framework import viewsets
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from ads.filters import AdFilter
 from ads.models import Ad, Comment
+from ads.paginations import AdPagination
 from ads.permissions import IsOwner, IsStaff
 from ads.serializers import CommentSerializer, AdSerializer, AdDetailSerializer
 from users.models import User
-
-
-class AdPagination(pagination.PageNumberPagination):
-    """
-    Пагинация для списка объявлений.
-    """
-    page_size = 4
-    page_query_param = 'page'
 
 
 # TODO view функции. Предлагаем Вам следующую структуру - но Вы всегда можете использовать свою
