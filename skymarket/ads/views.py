@@ -28,7 +28,7 @@ class AdViewSet(viewsets.ModelViewSet):
         """
         Определяет класс сериализатора в зависимости от действия.
         """
-        if self.action == 'list':
+        if self.action in ['list', 'personal_list']:
             return AdSerializer
         return AdDetailSerializer
 
