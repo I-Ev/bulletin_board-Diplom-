@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
@@ -52,6 +53,11 @@ class AdViewSet(viewsets.ModelViewSet):
         ad = serializer.save()
         ad.author = get_object_or_404(User, id=self.request.user.id)
         ad.save()
+
+    @action(methods=['get'], detail=False, url_path='me')
+    def personal_list(self, request, *args, **kwargs):
+        self.queryset = Ad.objects.filter(author=request.user)
+        return super().list(self, request, *args, **kwargs)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
