@@ -12,10 +12,10 @@ from users.apps import UsersConfig
 app_name = UsersConfig.name
 
 users_router = SimpleRouter()
-users_router.register("", UserViewSet, basename="users")
+users_router.register("users", UserViewSet, basename="users")
 
 urlpatterns = [
     path('token/', TokenObtainPairView.as_view()),
     path('refresh/', TokenRefreshView.as_view()),
-    path("", include(users_router.urls)),
+    path('', include(users_router.urls)),
 ]
