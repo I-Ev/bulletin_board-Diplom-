@@ -89,6 +89,9 @@ class CommentViewSet(viewsets.ModelViewSet):
         comment.author = get_object_or_404(User, id=self.request.user.id)
         comment.save()
 
+    def get_queryset(self):
+        return self.queryset.filter(ad=self.kwargs['ad_pk']).select_related("author")
+
 class UserAdsListView(ListAPIView):
     """
     Представление для списка объявлений пользователя.
