@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import pagination, viewsets
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -25,6 +26,8 @@ class AdViewSet(viewsets.ModelViewSet):
     """
     queryset = Ad.objects.all()
     pagination_class = AdPagination
+
+    filter_backends = (DjangoFilterBackend,)
     filterset_class = AdFilter
 
     def get_serializer_class(self):

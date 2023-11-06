@@ -20,7 +20,7 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-# TODO здесь необходимо подклюючит нужные нам urls к проекту
+# TODO здесь необходимо подключить нужные нам urls к проекту
 
 
 urlpatterns = [
