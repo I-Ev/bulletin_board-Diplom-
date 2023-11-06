@@ -2,10 +2,12 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
+from djoser import views
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from users.views import UserActivationView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -36,5 +38,7 @@ urlpatterns = [
                   path("api/ads/", include("ads.urls")),
                   path('api/token/', TokenObtainPairView.as_view()),
                   path('api/refresh/', TokenRefreshView.as_view()),
+
+                  path('auth/users/activate/<str:uid>/<str:token>/', UserActivationView.as_view(), name='activation'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
