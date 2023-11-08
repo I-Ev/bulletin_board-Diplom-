@@ -27,14 +27,14 @@ cd skymarket
 ```
 Выполнить команду:
 ```python
-docker-compouse up
+ python manage.py runserver
 ```
 Бэкенд-часть проекта будет доступна по адресу `localhost:8000`
 
 ### Фронтенд
 Перейти в папку `frontend_react`:
 ```python
-cd frontend_react
+cd market_postgres
 ```
 Выполнить команду:
 ```python
