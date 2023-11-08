@@ -48,7 +48,12 @@ docker-compouse up
 ## Загрузка фикстур в базу данных
 
 ```python
-python manage.py loaddata users.json
-python manage.py loaddata ads.json
-python manage.py loaddata comments.json
+python manage.py loadall
 ```
+Это последовательно загрузит 
+* users.json, 
+* ads.json 
+* comments.json 
+
+из папки `fixtures`
+
