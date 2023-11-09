@@ -32,19 +32,19 @@ class AdViewSet(viewsets.ModelViewSet):
             return AdSerializer
         return AdDetailSerializer
 
-    # def get_permissions(self):
-    #     """
-    #     Определяет права доступа в зависимости от выполняемого действия.
-    #     """
-    #     if self.action == 'retrieve':
-    #         permission_classes = [IsAuthenticated]
-    #     elif self.action == 'create':
-    #         permission_classes = [IsAuthenticated]
-    #     elif self.action in ['destroy', 'update', 'partial_update']:
-    #         permission_classes = [IsAuthenticated, IsOwner | IsStaff]
-    #     else:
-    #         permission_classes = [AllowAny]
-    #     return [permission() for permission in permission_classes]
+    def get_permissions(self):
+        """
+        Определяет права доступа в зависимости от выполняемого действия.
+        """
+        if self.action == 'retrieve':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'create':
+            permission_classes = [IsAuthenticated]
+        elif self.action in ['destroy', 'update', 'partial_update']:
+            permission_classes = [IsAuthenticated, IsOwner | IsStaff]
+        else:
+            permission_classes = [AllowAny]
+        return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
         """
@@ -67,19 +67,19 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
-    # def get_permissions(self):
-    #     """
-    #     Определяет права доступа в зависимости от выполняемого действия.
-    #     """
-    #     if self.action == 'retrieve':
-    #         permission_classes = [IsStaff]
-    #     elif self.action == 'create':
-    #         permission_classes = [IsAuthenticated]
-    #     elif self.action in ['destroy', 'update', 'partial_update']:
-    #         permission_classes = [IsAuthenticated, IsOwner | IsStaff]
-    #     else:
-    #         permission_classes = [AllowAny]
-    #     return [permission() for permission in permission_classes]
+    def get_permissions(self):
+        """
+        Определяет права доступа в зависимости от выполняемого действия.
+        """
+        if self.action == 'retrieve':
+            permission_classes = [IsStaff]
+        elif self.action == 'create':
+            permission_classes = [IsAuthenticated]
+        elif self.action in ['destroy', 'update', 'partial_update']:
+            permission_classes = [IsAuthenticated, IsOwner | IsStaff]
+        else:
+            permission_classes = [AllowAny]
+        return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
         """

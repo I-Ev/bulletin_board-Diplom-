@@ -13,10 +13,12 @@ class UserRoles(models.TextChoices):
     USER = 'user', _('user')  # Пользователь
     ADMIN = 'admin', _('admin')  # Админ
 
+
 class CustomUserManager(BaseUserManager):
     """
     Кастомный менеджер пользователей.
     """
+
     def create_user(self, email, password=None, **extra_fields):
         """
                 Создать обычного пользователя.
@@ -66,6 +68,7 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
+
 class User(AbstractUser):
     """
         Модель пользователя.
@@ -106,6 +109,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['first_name', 'last_name', 'phone', 'role']
 
     objects = CustomUserManager()
+
     @property
     def is_admin(self):
         return self.role == UserRoles.ADMIN

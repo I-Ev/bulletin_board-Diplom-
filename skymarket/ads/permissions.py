@@ -8,10 +8,10 @@ class IsStaff(BasePermission):
         Права доступа для админа.
         Пользователи с ролью ADMIN имеют доступ.
         """
-    def has_permission(self, request, view):
 
+    def has_permission(self, request, view):
         if not request.user.role == UserRoles.ADMIN:
-                return False
+            return False
         return True
 
 
